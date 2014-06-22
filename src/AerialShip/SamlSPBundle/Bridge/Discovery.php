@@ -29,7 +29,7 @@ class Discovery implements RelyingPartyInterface
      * @param TwigEngine $twig
      * @param HttpUtils $httpUtils
      */
-    function __construct($providerID, ServiceInfoCollection $metaProviders, TwigEngine $twig, HttpUtils $httpUtils) {
+    function __construct($providerID, ServiceInfoCollection $metaProviders, /*TwigEngine*/ $twig, HttpUtils $httpUtils) {
         $this->metaProviders = $metaProviders;
         $this->twig = $twig;
         $this->httpUtils = $httpUtils;
