@@ -65,7 +65,7 @@ class SamlSpAuthenticationListener extends AbstractAuthenticationListener
 
         try {
             $result = $this->getRelyingParty()->manage($myRequest);
-        } catch (EmptySamlResponseException $e) {
+        } catch (\Exception $e) {
             // hook to avoid RuntimeException('Got response to a request that was not made') and
             // RuntimeException('Expected Protocol/Response type but got nothing') from AssertionConsumer
             if ($e instanceof EmptySamlResponseException || $e instanceof InvalidRequestStateException) {
