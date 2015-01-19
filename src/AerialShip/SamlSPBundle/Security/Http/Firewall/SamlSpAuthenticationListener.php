@@ -3,6 +3,8 @@
 namespace AerialShip\SamlSPBundle\Security\Http\Firewall;
 
 use AerialShip\SamlSPBundle\Bridge\SamlSpInfo;
+use AerialShip\SamlSPBundle\Error\EmptySamlResponseException;
+use AerialShip\SamlSPBundle\Error\InvalidRequestStateException;
 use AerialShip\SamlSPBundle\Error\RelyingPartyNotSetException;
 use AerialShip\SamlSPBundle\RelyingParty\RelyingPartyInterface;
 use AerialShip\SamlSPBundle\Security\Core\Authentication\Token\SamlSpToken;
@@ -61,7 +63,17 @@ class SamlSpAuthenticationListener extends AbstractAuthenticationListener
             return null;
         }
 
-        $result = $this->getRelyingParty()->manage($myRequest);
+        try {
+            $result = $this->getRelyingParty()->manage($myRequest);
+        } catch (EmptySamlResponseException $e) {
+            // hook to avoid RuntimeException('Got response to a request that was not made') and
+            // RuntimeException('Expected Protocol/Response type but got nothing') from AssertionConsumer
+            if ($e instanceof EmptySamlResponseException || $e instanceof InvalidRequestStateException) {
+                $result = $this->httpUtils->createRedirectResponse($request, 'hrm_dashboard_profile');
+            } else {
+                throw $e;
+            }
+        }
 
         if ($result instanceof Response) {
             return $result;
