@@ -9,6 +9,8 @@ use AerialShip\LightSaml\Model\XmlDSig\SignatureXmlValidator;
 use AerialShip\LightSaml\Security\KeyHelper;
 use AerialShip\SamlSPBundle\Config\ServiceInfo;
 use AerialShip\SamlSPBundle\Config\ServiceInfoCollection;
+use AerialShip\SamlSPBundle\Error\EmptySamlResponseException;
+use AerialShip\SamlSPBundle\Error\InvalidRequestStateException;
 use AerialShip\SamlSPBundle\RelyingParty\RelyingPartyInterface;
 use AerialShip\SamlSPBundle\State\Request\RequestStateStoreInterface;
 use AerialShip\SamlSPBundle\State\SSO\SSOStateStoreInterface;
@@ -72,7 +74,8 @@ class AssertionConsumer implements RelyingPartyInterface
         $response = $this->getSamlResponse($request);
         $serviceInfo = $this->serviceInfoCollection->findByIDPEntityID($response->getIssuer());
 
-        $this->validateResponse($serviceInfo, $response, $request);
+        $serviceInfo->getSpProvider()->setRequest($request);
+        $this->validateResponse($serviceInfo, $response);
 
         $assertion = $this->getSingleAssertion($response);
 
@@ -95,7 +98,11 @@ class AssertionConsumer implements RelyingPartyInterface
             throw new \RuntimeException('SAML protocol response cannot be sent via binding HTTP REDIRECT');
         }
         if (!$response instanceof Response) {
-            throw new \RuntimeException('Expected Protocol/Response type but got '.($response ? get_class($response) : 'nothing'));
+            if ($response) {
+                throw new \RuntimeException('Expected Protocol/Response type but got ' . get_class($response));
+            } else {
+                throw new EmptySamlResponseException("Expected Protocol/Response type but got nothing");
+            }
         }
 
         return $response;
@@ -148,7 +155,7 @@ class AssertionConsumer implements RelyingPartyInterface
         if ($response->getInResponseTo()) {
             $requestState = $this->requestStore->get($response->getInResponseTo());
             if (!$requestState) {
-                throw new \RuntimeException('Got response to a request that was not made');
+                throw new InvalidRequestStateException('Got response to a request that was not made');
             }
             if ($requestState->getDestination() != $response->getIssuer()) {
                 throw new \RuntimeException('Got response from different issuer');

@@ -8,8 +8,8 @@
     },
     "require": {
         "php": ">=5.4.1",
-        "aerialship/lightsaml": "dev-master",
-        "symfony/symfony": "~2.4"
+        "aerialship/lightsaml": "~1.0",
+        "symfony/symfony": "~2.2"
     },
     "suggest": {
         "doctrine/orm": "If you want store sso state to database"
