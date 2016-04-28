@@ -120,9 +120,7 @@ class LogoutSendRequest implements RelyingPartyInterface
         if (!$serviceInfo) {
             throw new \RuntimeException("redirect to discovery");
         }
-        if (!$serviceInfo->getSpSigningProvider()->isEnabled()) {
-            throw new \RuntimeException('Signing is required for Logout');
-        }
+
         $serviceInfo->getSpProvider()->setRequest($request);
 
         return $serviceInfo;
