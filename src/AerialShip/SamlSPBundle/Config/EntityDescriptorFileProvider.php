@@ -6,6 +6,7 @@ use AerialShip\LightSaml\Model\Metadata\EntitiesDescriptor;
 use AerialShip\LightSaml\Model\Metadata\EntityDescriptor;
 use Symfony\Component\HttpKernel\KernelInterface;
 
+
 class EntityDescriptorFileProvider implements EntityDescriptorProviderInterface
 {
     /** @var  KernelInterface */
@@ -22,8 +23,7 @@ class EntityDescriptorFileProvider implements EntityDescriptorProviderInterface
 
 
 
-    function __construct(KernelInterface $kernel)
-    {
+    function __construct(KernelInterface $kernel) {
         $this->kernel = $kernel;
     }
 
@@ -32,8 +32,7 @@ class EntityDescriptorFileProvider implements EntityDescriptorProviderInterface
      * @param string $filename
      * @throws \InvalidArgumentException
      */
-    public function setFilename($filename)
-    {
+    public function setFilename($filename) {
         if ($filename && $filename[0] == '@') {
             $filename = $this->kernel->locateResource($filename);
         }
@@ -46,8 +45,7 @@ class EntityDescriptorFileProvider implements EntityDescriptorProviderInterface
     /**
      * @return string
      */
-    public function getFilename()
-    {
+    public function getFilename() {
         return $this->filename;
     }
 
@@ -73,8 +71,7 @@ class EntityDescriptorFileProvider implements EntityDescriptorProviderInterface
     /**
      * @return EntityDescriptor
      */
-    public function getEntityDescriptor()
-    {
+    public function getEntityDescriptor() {
         if ($this->entityDescriptor === null) {
             $this->load();
         }
@@ -82,8 +79,7 @@ class EntityDescriptorFileProvider implements EntityDescriptorProviderInterface
     }
 
 
-    protected function load()
-    {
+    protected function load() {
         $doc = new \DOMDocument();
         $doc->load($this->filename);
         if ($this->entityId) {
@@ -95,4 +91,5 @@ class EntityDescriptorFileProvider implements EntityDescriptorProviderInterface
             $this->entityDescriptor->loadFromXml($doc->firstChild);
         }
     }
-}
+
+} 

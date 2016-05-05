@@ -41,4 +41,5 @@ class LogoutFallback implements RelyingPartyInterface
     {
         return $this->httpUtils->createRedirectResponse($request, $request->attributes->get('local_logout_path'));
     }
-}
+
+} 

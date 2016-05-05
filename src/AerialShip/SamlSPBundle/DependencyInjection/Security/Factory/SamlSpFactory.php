@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
+
 class SamlSpFactory extends AbstractFactory
 {
 
@@ -65,8 +66,8 @@ class SamlSpFactory extends AbstractFactory
                                 ->arrayNode('signing')->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('id')->cannotBeEmpty()->end()
-                                        ->scalarNode('cert_file')->end()
-                                        ->scalarNode('key_file')->end()
+                                        ->scalarNode('cert_file')->cannotBeEmpty()->end()
+                                        ->scalarNode('key_file')->cannotBeEmpty()->end()
                                         ->scalarNode('key_pass')->end()
                                     ->end()
                                 ->end()
@@ -426,4 +427,6 @@ class SamlSpFactory extends AbstractFactory
 
         return $entryPointId;
     }
-}
+
+
+} 

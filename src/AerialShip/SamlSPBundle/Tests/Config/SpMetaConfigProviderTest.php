@@ -2,6 +2,7 @@
 
 namespace AerialShip\SamlSPBundle\Tests\Config;
 
+
 use AerialShip\LightSaml\Bindings;
 use AerialShip\LightSaml\NameIDPolicy;
 use AerialShip\SamlSPBundle\Config\SpMetaConfigProvider;
@@ -75,4 +76,5 @@ class SpMetaConfigProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Bindings::SAML2_HTTP_REDIRECT, $spMeta->getAuthnRequestBinding());
         $this->assertEquals(Bindings::SAML2_HTTP_REDIRECT, $spMeta->getLogoutRequestBinding());
     }
+
 } 

@@ -2,6 +2,7 @@
 
 namespace AerialShip\SamlSPBundle\Tests\DependencyInjection;
 
+
 use AerialShip\SamlSPBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Processor;
 
@@ -92,4 +93,4 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
         return $processor->processConfiguration($configuration, $configs);
     }
-}
+} 
