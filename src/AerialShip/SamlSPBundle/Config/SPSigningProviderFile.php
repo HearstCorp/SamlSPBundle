@@ -6,6 +6,7 @@ use AerialShip\LightSaml\Security\KeyHelper;
 use AerialShip\LightSaml\Security\X509Certificate;
 use Symfony\Component\HttpKernel\KernelInterface;
 
+
 class SPSigningProviderFile implements SPSigningProviderInterface
 {
     /** @var  KernelInterface */
@@ -44,8 +45,7 @@ class SPSigningProviderFile implements SPSigningProviderInterface
     /**
      * @return bool
      */
-    public function isEnabled()
-    {
+    public function isEnabled() {
         return true;
     }
 
@@ -80,4 +80,5 @@ class SPSigningProviderFile implements SPSigningProviderInterface
         }
         return $this->_key;
     }
+
 }

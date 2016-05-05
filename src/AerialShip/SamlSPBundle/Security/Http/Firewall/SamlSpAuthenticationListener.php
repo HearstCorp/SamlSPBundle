@@ -14,14 +14,14 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 
+
 class SamlSpAuthenticationListener extends AbstractAuthenticationListener
 {
     /** @var RelyingPartyInterface */
     protected $relyingParty;
 
 
-    public function setRelyingParty(RelyingPartyInterface $relyingParty)
-    {
+    public function setRelyingParty(RelyingPartyInterface $relyingParty) {
         $this->relyingParty = $relyingParty;
     }
 
@@ -30,8 +30,7 @@ class SamlSpAuthenticationListener extends AbstractAuthenticationListener
      * @return RelyingPartyInterface
      * @throws RelyingPartyNotSetException
      */
-    protected function getRelyingParty()
-    {
+    protected function getRelyingParty() {
         if (false == $this->relyingParty) {
             throw new RelyingPartyNotSetException('The relying party is required for the listener work, but it was not set. Seems like miss configuration');
         }
@@ -105,4 +104,5 @@ class SamlSpAuthenticationListener extends AbstractAuthenticationListener
             }
         }
     }
-}
+
+} 

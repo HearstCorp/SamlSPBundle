@@ -10,4 +10,5 @@ interface SpMetaProviderInterface
      * @return SpMeta
      */
     public function getSpMeta();
-}
+
+} 

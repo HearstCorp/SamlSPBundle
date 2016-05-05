@@ -17,6 +17,7 @@ use AerialShip\SamlSPBundle\State\SSO\SSOStateStoreInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
+
 class AssertionConsumer implements RelyingPartyInterface
 {
     /** @var BindingManager  */
@@ -34,8 +35,7 @@ class AssertionConsumer implements RelyingPartyInterface
 
 
 
-    public function __construct(
-        BindingManager $bindingManager,
+    public function __construct(BindingManager $bindingManager,
         ServiceInfoCollection $serviceInfoCollection,
         RequestStateStoreInterface $requestStore,
         SSOStateStoreInterface $ssoStore
@@ -73,10 +73,6 @@ class AssertionConsumer implements RelyingPartyInterface
 
         $response = $this->getSamlResponse($request);
         $serviceInfo = $this->serviceInfoCollection->findByIDPEntityID($response->getIssuer());
-        
-        if (!$serviceInfo) {
-            throw new \RuntimeException('Could not find ServiceProvider with entity id: '.$response->getIssuer());
-        }
 
         $serviceInfo->getSpProvider()->setRequest($request);
         $this->validateResponse($serviceInfo, $response);
@@ -85,8 +81,7 @@ class AssertionConsumer implements RelyingPartyInterface
 
         $this->createSSOState($serviceInfo, $assertion);
 
-        return new SamlSpInfo(
-            $serviceInfo->getAuthenticationService(),
+        return new SamlSpInfo($serviceInfo->getAuthenticationService(),
             $assertion->getSubject()->getNameID(),
             $assertion->getAllAttributes(),
             $assertion->getAuthnStatement()
@@ -144,8 +139,7 @@ class AssertionConsumer implements RelyingPartyInterface
     }
 
 
-    protected function validateResponse(ServiceInfo $metaProvider, Response $response)
-    {
+    protected function validateResponse(ServiceInfo $metaProvider, Response $response) {
         if (!$metaProvider) {
             throw new \RuntimeException('Unknown issuer '.$response->getIssuer());
         }
@@ -157,8 +151,7 @@ class AssertionConsumer implements RelyingPartyInterface
         }
     }
 
-    protected function validateState(Response $response)
-    {
+    protected function validateState(Response $response) {
         if ($response->getInResponseTo()) {
             $requestState = $this->requestStore->get($response->getInResponseTo());
             if (!$requestState) {
@@ -171,8 +164,7 @@ class AssertionConsumer implements RelyingPartyInterface
         }
     }
 
-    protected function validateStatus(Response $response)
-    {
+    protected function validateStatus(Response $response) {
         if (!$response->getStatus()->isSuccess()) {
             $status = $response->getStatus()->getStatusCode()->getValue();
             $status .= "\n".$response->getStatus()->getMessage();
@@ -183,8 +175,7 @@ class AssertionConsumer implements RelyingPartyInterface
         }
     }
 
-    protected function validateResponseSignature(ServiceInfo $serviceInfo, Response $response)
-    {
+    protected function validateResponseSignature(ServiceInfo $serviceInfo, Response $response) {
         /** @var  $signature SignatureXmlValidator */
         if ($signature = $response->getSignature()) {
             $keys = $this->getAllKeys($serviceInfo);
@@ -264,8 +255,7 @@ class AssertionConsumer implements RelyingPartyInterface
             }
             if (!$ok) {
                 throw new AuthenticationException(
-                    sprintf(
-                        'Invalid Assertion SubjectConfirmation Recipient %s',
+                    sprintf('Invalid Assertion SubjectConfirmation Recipient %s',
                         $subjectConfirmation->getData()->getRecipient()
                     )
                 );
@@ -285,7 +275,7 @@ class AssertionConsumer implements RelyingPartyInterface
             $arr = $edIDP->getAllIdpSsoDescriptors();
             if ($arr) {
                 $idp = $arr[0];
-                $keyDescriptors = $idp->getKeyDescriptors();
+                $keyDescriptors = $idp->getKeyDescriptors('signing');
                 foreach ($keyDescriptors as $keyDescriptor) {
                     $certificate = $keyDescriptor->getCertificate();
                     $result[] = KeyHelper::createPublicKey($certificate);
@@ -319,4 +309,6 @@ class AssertionConsumer implements RelyingPartyInterface
         
         return $result;
     }
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace AerialShip\SamlSPBundle\State\Request;
 
+
 interface RequestStateStoreInterface
 {
     /**

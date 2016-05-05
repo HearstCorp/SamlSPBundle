@@ -9,6 +9,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
+
 class SamlSpFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -439,4 +440,5 @@ class SamlSpFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($providerDefinition->getArgument(3));
     }
+
 } 

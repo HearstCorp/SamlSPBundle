@@ -1,23 +1,21 @@
 {
     "name": "aerialship/saml-sp-bundle",
     "license": "MIT",
-    "type": "symfony-bundle",
+    "type": "project",
     "description": "Symfony2 SAML2 authentication bundle",
     "autoload": {
-        "psr-0": { "AerialShip\\SamlSPBundle\\": "src/" }
+        "psr-0": { "": "src/" }
     },
     "require": {
         "php": ">=5.4.1",
         "aerialship/lightsaml": "~1.0",
-        "symfony/symfony": ">=2.3 <2.8"
+        "symfony/symfony": "~2.2"
     },
     "suggest": {
-        "doctrine/orm": "If you want store sso state in relational database",
-        "doctrine/mongodb-odm": "If you want store sso state to mongodb"
+        "doctrine/orm": "If you want store sso state to database"
     },
     "scripts": {
         "post-install-cmd": [
-            "bash contrib/setup.sh"
         ],
         "post-update-cmd": [
         ]
@@ -26,9 +24,5 @@
         "bin-dir": "bin"
     },
     "prefer-stable": true,
-    "minimum-stability": "dev",
-    "require-dev": {
-        "squizlabs/php_codesniffer": "~2.0",
-        "phpunit/phpunit": "~4.8"
-    }
+    "minimum-stability": "dev"
 }

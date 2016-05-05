@@ -6,6 +6,7 @@ use AerialShip\LightSaml\Bindings;
 use AerialShip\LightSaml\Meta\SpMeta;
 use AerialShip\LightSaml\NameIDPolicy;
 
+
 class SpMetaConfigProvider implements SpMetaProviderInterface
 {
     /** @var  SpMeta */
@@ -42,8 +43,7 @@ class SpMetaConfigProvider implements SpMetaProviderInterface
     /**
      * @return SpMeta
      */
-    public function getSpMeta()
-    {
+    public function getSpMeta() {
         return $this->spMeta;
     }
 
@@ -56,11 +56,9 @@ class SpMetaConfigProvider implements SpMetaProviderInterface
     {
         switch ($value) {
             case 'persistent':
-                $result = NameIDPolicy::PERSISTENT;
-                break;
+                $result = NameIDPolicy::PERSISTENT; break;
             case 'transient':
-                $result = NameIDPolicy::TRANSIENT;
-                break;
+                $result = NameIDPolicy::TRANSIENT; break;
             default:
                 $result = $value;
         }
@@ -75,14 +73,13 @@ class SpMetaConfigProvider implements SpMetaProviderInterface
     {
         switch ($value) {
             case 'post':
-                $result = Bindings::SAML2_HTTP_POST;
-                break;
+                $result = Bindings::SAML2_HTTP_POST; break;
             case 'redirect':
-                $result = Bindings::SAML2_HTTP_REDIRECT;
-                break;
+                $result = Bindings::SAML2_HTTP_REDIRECT; break;
             default:
                 $result = $value;
         }
         return $result;
     }
-}
+
+} 

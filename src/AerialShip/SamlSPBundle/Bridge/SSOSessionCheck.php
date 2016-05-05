@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 
+
 class SSOSessionCheck implements RelyingPartyInterface
 {
     /** @var  string */
@@ -82,4 +83,5 @@ class SSOSessionCheck implements RelyingPartyInterface
 
         return null;
     }
+
 } 

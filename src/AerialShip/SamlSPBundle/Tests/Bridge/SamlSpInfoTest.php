@@ -2,6 +2,7 @@
 
 namespace AerialShip\SamlSPBundle\Tests\Bridge;
 
+
 use AerialShip\SamlSPBundle\Bridge\SamlSpInfo;
 
 class SamlSpInfoTest extends \PHPUnit_Framework_TestCase
@@ -127,4 +128,5 @@ class SamlSpInfoTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array(), $samlSpInfo->getAttributes());
     }
+
 } 
