@@ -153,7 +153,10 @@ class LogoutSendRequest implements RelyingPartyInterface
             $samlInfo->getNameID()->getFormat(),
             $samlInfo->getAuthnStatement()->getSessionIndex()
         );
-        $logoutRequest->sign($serviceInfo->getSpSigningProvider()->getCertificate(), $serviceInfo->getSpSigningProvider()->getPrivateKey());
+        
+        if ($serviceInfo->getSpSigningProvider()->isEnabled()) {
+            $logoutRequest->sign($serviceInfo->getSpSigningProvider()->getCertificate(), $serviceInfo->getSpSigningProvider()->getPrivateKey());
+        }
 
         return $logoutRequest;
     }
